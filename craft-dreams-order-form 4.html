@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craft Dreams Co. — Order Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #FF6B6B;
+    --pink: #FF8FAB;
+    --turquoise: #2EC4B6;
+    --teal-light: #CBF3F0;
+    --cream: #FFF9F0;
+    --dark: #2D2D2D;
+    --mid: #555;
+    --border: #e0d5cc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,143,171,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(46,196,182,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(255,107,107,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 40px; }
+
+  .brand-name-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 8px 24px;
+    margin-bottom: 8px;
+  }
+
+  .brand-name {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.4rem;
+    background: linear-gradient(135deg, #B8860B, #FFD700, #FF8C00, #FFB347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    filter: drop-shadow(0 2px 8px rgba(255,180,0,0.3));
+  }
+
+  .twinkle {
+    position: absolute;
+    animation: twinkle-anim 2s ease-in-out infinite;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .twinkle:nth-child(1) { font-size: 1.2rem; top: 0px; left: 0px; animation-delay: 0s; }
+  .twinkle:nth-child(2) { font-size: 0.85rem; top: -6px; right: 10px; animation-delay: 0.5s; }
+  .twinkle:nth-child(3) { font-size: 1rem; bottom: 4px; right: 0px; animation-delay: 1s; }
+  .twinkle:nth-child(4) { font-size: 0.75rem; bottom: 0px; left: 14px; animation-delay: 1.5s; }
+
+  @keyframes twinkle-anim {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.3; transform: scale(0.65) rotate(25deg); }
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    color: var(--mid);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+
+
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    border: 1.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--coral), var(--pink), var(--turquoise));
+  }
+
+  .card-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.2rem;
+    color: var(--coral);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title .emoji { font-size: 1.4rem; }
+
+  .field { margin-bottom: 18px; }
+
+  label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  label .required { color: var(--coral); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--turquoise);
+    box-shadow: 0 0 0 3px rgba(46,196,182,0.15);
+    background: white;
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .two-col { grid-template-columns: 1fr; } }
+
+  .theme-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+
+  .theme-pill {
+    padding: 8px 16px;
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    color: var(--mid);
+    user-select: none;
+  }
+
+  .theme-pill:hover { border-color: var(--pink); color: var(--pink); }
+  .theme-pill.selected {
+    background: linear-gradient(135deg, var(--coral), var(--pink));
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 3px 10px rgba(255,107,107,0.3);
+  }
+
+  .guest-list { display: flex; flex-direction: column; gap: 10px; }
+  .guest-row { display: flex; align-items: center; gap: 10px; }
+
+  .guest-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--turquoise), #22a89f);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .guest-row input { flex: 1; }
+
+  .add-guest-btn {
+    margin-top: 12px;
+    padding: 10px 20px;
+    border: 2px dashed var(--turquoise);
+    border-radius: 12px;
+    background: var(--teal-light);
+    color: var(--turquoise);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+  }
+
+  .add-guest-btn:hover { background: var(--turquoise); color: white; border-style: solid; }
+
+  .addon-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .addon-row:hover { border-color: var(--pink); }
+  .addon-row.checked { border-color: var(--pink); background: rgba(255,143,171,0.06); }
+  .addon-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--pink); flex-shrink: 0; }
+  .addon-label { font-weight: 700; font-size: 0.95rem; flex: 1; }
+  .addon-price { font-weight: 800; color: var(--coral); font-size: 0.95rem; }
+  .addon-note { font-size: 0.82rem; color: var(--mid); margin-top: 2px; font-weight: 600; }
+
+  .deposit-box {
+    background: linear-gradient(135deg, rgba(255,107,107,0.06), rgba(255,143,171,0.06));
+    border: 2px solid var(--pink);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .deposit-box p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    color: var(--mid);
+    font-weight: 600;
+  }
+
+  .deposit-box p strong { color: var(--dark); }
+
+  .etransfer-box {
+    background: white;
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .etransfer-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+  .etransfer-text { font-size: 0.92rem; font-weight: 700; color: var(--dark); line-height: 1.5; }
+
+  .etransfer-email {
+    font-size: 1rem;
+    color: #B8860B;
+    font-weight: 800;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .checkbox-row { display: flex; align-items: flex-start; gap: 12px; }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--coral);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .checkbox-row label {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .referral-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+  .ref-chip {
+    padding: 7px 14px;
+    border: 2px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    color: var(--mid);
+  }
+
+  .ref-chip:hover { border-color: var(--turquoise); color: var(--turquoise); }
+  .ref-chip.selected { background: var(--turquoise); border-color: var(--turquoise); color: white; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--coral), var(--pink));
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-family: 'Pacifico', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(255,107,107,0.35);
+    transition: all 0.25s;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,107,0.4); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  .footer-note { text-align: center; margin-top: 24px; font-size: 0.85rem; color: var(--mid); font-weight: 600; }
+  .footer-note a { color: var(--turquoise); text-decoration: none; font-weight: 800; }
+
+  .shirt-size-field { display: none; margin-top: 12px; }
+  .shirt-size-field.visible { display: block; }
+
+  .success-screen { display: none; text-align: center; padding: 60px 20px; }
+  .success-screen.visible { display: block; }
+
+  .success-icon { font-size: 4rem; margin-bottom: 16px; animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+  @keyframes pop {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+  }
+
+  .success-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--coral), var(--turquoise));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .success-msg { color: var(--mid); font-size: 1rem; font-weight: 600; line-height: 1.6; max-width: 420px; margin: 0 auto; }
+
+  .helper { font-size: 0.8rem; color: #999; font-weight: 600; margin-top: 4px; }
+
+  select option { font-weight: 600; }
+  /* Theme gallery */
+  .theme-gallery {
+    display: none;
+    margin-top: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .theme-gallery.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .gallery-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+
+  .gallery-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery-scroll::-webkit-scrollbar { height: 4px; }
+  .gallery-scroll::-webkit-scrollbar-track { background: var(--border); border-radius: 4px; }
+  .gallery-scroll::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 4px; }
+
+  .gallery-img {
+    flex-shrink: 0;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 14px;
+    scroll-snap-align: start;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .gallery-img:hover { transform: scale(1.03); border-color: var(--pink); }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 16px;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+
+  .price-callout {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFD700, #FF8C00);
+    color: white;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="header">
+    <div class="brand-name-wrap">
+      <span class="twinkle">✨</span>
+      <span class="twinkle">⭐</span>
+      <span class="twinkle">✨</span>
+      <span class="twinkle">⭐</span>
+      <div class="brand-name">Craft Dreams Co.</div>
+    </div>
+    <div class="tagline">Personalized Birthday Loot Bags ✨</div>
+  </div>
+
+
+
+  <div id="form-wrap">
+
+    <!-- CONTACT INFO -->
+    <div class="card">
+      <div class="card-title">Your Info</div>
+      <div class="two-col">
+        <div class="field">
+          <label>Your Name <span class="required">*</span></label>
+          <input type="text" id="parent-name" placeholder="Jane Smith" required>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="required">*</span></label>
+          <input type="tel" id="phone" placeholder="(416) 555-0100" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email Address <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="jane@email.com" required>
+      </div>
+      <div class="field">
+        <label>How did you hear about us? <span class="required">*</span></label>
+        <div class="referral-chips">
+          <div class="ref-chip" onclick="selectRef(this)">Instagram</div>
+          <div class="ref-chip" onclick="selectRef(this)">Facebook</div>
+          <div class="ref-chip" onclick="selectRef(this)">Word of mouth</div>
+          <div class="ref-chip" onclick="selectRef(this)">Other</div>
+        </div>
+        <input type="hidden" id="referral-val">
+        <div id="referral-other-wrap" style="display:none; margin-top:10px;">
+          <input type="text" id="referral-other-text" placeholder="Please specify..." oninput="document.getElementById('referral-val').value = this.value">
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTY DETAILS -->
+    <div class="card">
+      <div class="card-title">Party Details</div>
+      <div class="two-col">
+        <div class="field">
+          <label>Birthday Child's Name <span class="required">*</span></label>
+          <input type="text" id="child-name" placeholder="Sophia" required>
+        </div>
+        <div class="field">
+          <label>Age Turning <span class="required">*</span></label>
+          <input type="number" id="child-age" placeholder="5" min="1" max="17" required>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Party Date <span class="required">*</span></label>
+          <input type="date" id="party-date" required>
+        </div>
+        <div class="field">
+          <label>Required Pickup Date <span class="required">*</span></label>
+          <input type="date" id="pickup-date" required>
+          <div class="helper">Must be at least 2 weeks from today</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME -->
+    <div class="card">
+      <div class="card-title">Theme</div>
+      <div class="field">
+        <label>Select a Theme <span class="required">*</span></label>
+        <div class="theme-grid">
+          <div class="theme-pill" onclick="selectTheme(this)">🧜🏾‍♀️ Mermaid</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🦕 Dinosaur</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🚧 Construction</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🚀 Space</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🦄 Unicorn</div>
+          <div class="theme-pill" onclick="selectTheme(this)">⚽ Soccer</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🏀 Basketball</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🏒 Hockey</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🌿 Jungle</div>
+          <div class="theme-pill" onclick="selectTheme(this)">🦸 Superheroes</div>
+        </div>
+        <input type="hidden" id="theme-val">
+      </div>
+      <!-- Theme gallery -->
+      <div class="theme-gallery" id="theme-gallery">
+        <div class="gallery-label">Photos — tap to enlarge</div>
+        <div class="gallery-scroll" id="gallery-scroll"></div>
+      </div>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+        <img id="lightbox-img" src="" alt="Theme photo">
+      </div>
+    </div>
+
+    <!-- QUANTITY + GUEST NAMES -->
+    <div class="card">
+      <div class="card-title">Guest List</div>
+      <div class="field">
+        <label>Number of Boxes <span class="required">*</span></label>
+        <input type="number" id="quantity" placeholder="e.g. 12" min="1" max="50" required oninput="syncGuestCount(this.value); updateTotal(this.value);">
+        <div class="helper">Each box is $20 and personalized with a guest's name</div>
+        <div id="total-display" style="display:none;">
+          <span class="price-callout" id="total-text"></span>
+        </div>
+      </div>
+      <div class="field" style="margin-top: 20px;">
+        <label>Guest Names <span class="required">*</span></label>
+        <div class="helper" style="margin-bottom:10px;">All names required before production begins. Include the birthday child if they're receiving a box.</div>
+        <div class="guest-list" id="guest-list">
+          <div class="guest-row">
+            <div class="guest-number">1</div>
+            <input type="text" placeholder="Guest name">
+          </div>
+        </div>
+        <button class="add-guest-btn" type="button" onclick="addGuest()">+ Add another guest</button>
+      </div>
+    </div>
+
+    <!-- ADD-ONS -->
+    <div class="card">
+      <div class="card-title">Add-Ons</div>
+
+      <div class="addon-row" id="shirt-addon-row">
+        <input type="checkbox" id="shirt-addon" onchange="handleShirtAddon(this)">
+        <div style="flex:1">
+          <div class="addon-label">🎽 Birthday Child Shirt</div>
+          <div class="addon-note">Themed shirt for the birthday child</div>
+        </div>
+        <div class="addon-price">+$20</div>
+      </div>
+      <div class="shirt-size-field" id="shirt-size-wrap">
+        <label>Shirt Size <span class="required">*</span></label>
+        <select id="shirt-size">
+          <option value="">Select a size</option>
+          <option>2T</option>
+          <option>3T</option>
+          <option>4T</option>
+          <option>Youth XS (4-5)</option>
+          <option>Youth S (6-8)</option>
+          <option>Youth M (10-12)</option>
+          <option>Youth L (14-16)</option>
+        </select>
+      </div>
+
+      <div class="addon-row" id="rush-addon-row">
+        <input type="checkbox" id="rush-addon" onchange="handleRushAddon(this)">
+        <div style="flex:1">
+          <div class="addon-label">⚡ Rush Order</div>
+          <div class="addon-note">Less than 2 weeks to party date</div>
+        </div>
+        <div class="addon-price">+$15</div>
+      </div>
+    </div>
+
+    <!-- ALLERGIES -->
+    <div class="card">
+      <div class="card-title">Allergies & Notes</div>
+      <div class="field">
+        <label>Allergies or Dietary Restrictions</label>
+        <textarea id="allergies" placeholder="e.g. nut allergy, gluten free, no dairy — or leave blank if none"></textarea>
+        <div class="helper">Boxes include Goldfish crackers and a chocolate chip granola bar. Please note any allergies so we can accommodate.</div>
+      </div>
+      <div class="field">
+        <label>Anything Else We Should Know?</label>
+        <textarea id="notes" placeholder="Special requests, colour preferences..."></textarea>
+      </div>
+    </div>
+
+    <!-- DEPOSIT + TERMS -->
+    <div class="card">
+      <div class="card-title">Deposit & Confirmation</div>
+      <div class="deposit-box">
+        <p>A <strong>50% non-refundable deposit</strong> is required to confirm your order and begin production. The remaining balance is due at pickup. Orders are not confirmed until the deposit is received.</p>
+        <p>Production begins <strong>only after all guest names and deposit are received.</strong></p>
+
+        <div class="etransfer-box">
+          <div class="etransfer-text">
+            Send your e-transfer to:
+            <span class="etransfer-email">craftdreamsco@gmail.com</span>
+            Use your child's name as the message.
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitForm()">
+      Send My Order Request 🎉
+    </button>
+
+    <div class="footer-note">
+      Questions? DM us on Instagram <a href="https://www.instagram.com/craftdreamsco" target="_blank">@CraftDreamsCo</a> 💌
+    </div>
+
+  </div><!-- /form-wrap -->
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">You're all set!</div>
+    <div class="success-msg">
+      Thank you for your order request! We'll be in touch within 24 hours to confirm details.<br><br>
+      Don't forget to send your 50% deposit to <strong>craftdreamsco@gmail.com</strong> with your child's name in the message. Your order isn't confirmed until we receive it.<br><br>
+      Can't wait to make your celebration magical. ✨
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  // Theme image gallery
+  const themeImages = {
+    '🧜🏾‍♀️ Mermaid': [
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0678.jpeg',
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0682.jpeg',
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0680.jpeg',
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0681.jpeg',
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0677.jpeg',
+      'https://craftdreamsco.github.io/Order-Form/images/IMG_0679.jpeg',
+    ]
+  };
+
+  function updateGallery(theme) {
+    const gallery = document.getElementById('theme-gallery');
+    const scroll = document.getElementById('gallery-scroll');
+    const images = themeImages[theme];
+
+    if (!images || images.length === 0) {
+      gallery.classList.remove('visible');
+      return;
+    }
+
+    scroll.innerHTML = images.map(src =>
+      `<img class="gallery-img" src="${src}" alt="${theme}" onclick="openLightbox('${src}')">`
+    ).join('');
+
+    gallery.classList.add('visible');
+  }
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function selectTheme(el) {
+    document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+    const theme = el.textContent.trim();
+    document.getElementById('theme-val').value = theme;
+    updateGallery(theme);
+  }
+
+  function selectRef(el) {
+    document.querySelectorAll('.ref-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const val = el.textContent.trim();
+    const otherWrap = document.getElementById('referral-other-wrap');
+    if (val === 'Other') {
+      otherWrap.style.display = 'block';
+      document.getElementById('referral-val').value = '';
+      document.getElementById('referral-other-text').focus();
+    } else {
+      otherWrap.style.display = 'none';
+      document.getElementById('referral-other-text').value = '';
+      document.getElementById('referral-val').value = val;
+    }
+  }
+
+  function updateTotal(val) {
+    const n = parseInt(val);
+    const display = document.getElementById('total-display');
+    const text = document.getElementById('total-text');
+    if (n && n > 0) {
+      const total = n * 20;
+      const deposit = Math.ceil(total / 2);
+      text.textContent = `${n} boxes = $${total} total · Deposit due: $${deposit}`;
+      display.style.display = 'block';
+    } else {
+      display.style.display = 'none';
+    }
+  }
+
+  let guestCount = 1;
+
+  function addGuest() {
+    guestCount++;
+    const list = document.getElementById('guest-list');
+    const row = document.createElement('div');
+    row.className = 'guest-row';
+    row.innerHTML = `<div class="guest-number">${guestCount}</div><input type="text" placeholder="Guest name">`;
+    list.appendChild(row);
+  }
+
+  function syncGuestCount(val) {
+    const n = parseInt(val);
+    if (!n || n < 1) return;
+    const list = document.getElementById('guest-list');
+    const current = list.querySelectorAll('.guest-row').length;
+    if (n > current) {
+      for (let i = current; i < n; i++) {
+        const row = document.createElement('div');
+        row.className = 'guest-row';
+        row.innerHTML = `<div class="guest-number">${i + 1}</div><input type="text" placeholder="Guest name">`;
+        list.appendChild(row);
+      }
+      guestCount = n;
+    }
+  }
+
+  function toggleAddon(row, sizeWrapId) {
+    const cb = row.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    row.classList.toggle('checked', cb.checked);
+    if (sizeWrapId) {
+      document.getElementById(sizeWrapId).classList.toggle('visible', cb.checked);
+    }
+  }
+
+  async function submitForm() {
+    const required = [
+      document.getElementById('parent-name').value,
+      document.getElementById('phone').value,
+      document.getElementById('email').value,
+      document.getElementById('child-name').value,
+      document.getElementById('child-age').value,
+      document.getElementById('party-date').value,
+      document.getElementById('pickup-date').value,
+      document.getElementById('theme-val').value,
+      document.getElementById('quantity').value,
+      document.getElementById('referral-val').value,
+    ];
+
+    const allFilled = required.every(v => v && v.trim() !== '');
+
+    if (!allFilled) {
+      alert('Please fill in all required fields and confirm the deposit terms before submitting.');
+      return;
+    }
+
+    const guestInputs = document.querySelectorAll('#guest-list .guest-row input');
+    const guestNames = Array.from(guestInputs).map((el, i) => `Guest ${i+1}: ${el.value}`).join('\n');
+
+    const shirtAddon = document.getElementById('shirt-addon').checked;
+    const shirtSize = shirtAddon ? document.getElementById('shirt-size').value : 'N/A';
+    const rushAddon = document.getElementById('rush-addon').checked;
+
+    const qty = parseInt(document.getElementById('quantity').value);
+    const total = qty * 15;
+    const deposit = Math.ceil(total / 2);
+
+    const formData = new FormData();
+    formData.append('Parent Name', document.getElementById('parent-name').value);
+    formData.append('Phone', document.getElementById('phone').value);
+    formData.append('Email', document.getElementById('email').value);
+    formData.append('How They Found Us', document.getElementById('referral-val').value);
+    formData.append('Birthday Child Name', document.getElementById('child-name').value);
+    formData.append('Age Turning', document.getElementById('child-age').value);
+    formData.append('Party Date', document.getElementById('party-date').value);
+    formData.append('Required Pickup Date', document.getElementById('pickup-date').value);
+    formData.append('Theme', document.getElementById('theme-val').value);
+    formData.append('Number of Boxes', qty);
+    formData.append('Order Total', `$${total}`);
+    formData.append('Deposit Owing', `$${deposit}`);
+    formData.append('Guest Names', guestNames);
+    formData.append('Birthday Shirt Add-On', shirtAddon ? `Yes — Size: ${shirtSize}` : 'No');
+    formData.append('Rush Order', rushAddon ? 'Yes (+$15)' : 'No');
+    formData.append('Allergies / Dietary Restrictions', document.getElementById('allergies').value || 'None noted');
+    formData.append('Additional Notes', document.getElementById('notes').value || 'None');
+    formData.append('Deposit Instructions', 'E-transfer to craftdreamsco@gmail.com — child name as message');
+
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending... 💫';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('https://formspree.io/f/mrerkknn', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success-screen').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.textContent = 'Send My Order Request 🎉';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or DM us on Instagram @CraftDreamsCo');
+      }
+    } catch (err) {
+      btn.textContent = 'Send My Order Request 🎉';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or DM us on Instagram @CraftDreamsCo');
+    }
+  }
+
+  function handleShirtAddon(cb) {
+    const row = document.getElementById('shirt-addon-row');
+    row.classList.toggle('checked', cb.checked);
+    document.getElementById('shirt-size-wrap').classList.toggle('visible', cb.checked);
+  }
+
+  function handleRushAddon(cb) {
+    const row = document.getElementById('rush-addon-row');
+    row.classList.toggle('checked', cb.checked);
+  }
+</script>
+</body>
+</html>
